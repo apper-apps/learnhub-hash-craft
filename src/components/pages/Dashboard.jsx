@@ -498,10 +498,9 @@ return (
           <PerformanceChart
             data={performance}
             title="Academic Performance"
-          />
+/>
         </motion.section>
       </main>
-</main>
       </div>
 
       <ConnectionModal
