@@ -13,7 +13,9 @@ import Empty from "@/components/ui/Empty";
 import coursesService from "@/services/api/coursesService";
 import assignmentsService from "@/services/api/assignmentsService";
 import performanceService from "@/services/api/performanceService";
-
+import exportService from "@/services/api/exportService";
+import ApperIcon from "@/components/ApperIcon";
+import Button from "@/components/atoms/Button";
 const Dashboard = () => {
   const [courses, setCourses] = useState([]);
   const [assignments, setAssignments] = useState([]);
@@ -27,7 +29,9 @@ const Dashboard = () => {
   const [isConnecting, setIsConnecting] = useState(false);
   const [connectionStatus, setConnectionStatus] = useState("disconnected");
   const [lastSync, setLastSync] = useState(null);
-
+  const [isExporting, setIsExporting] = useState(false);
+  const [exportType, setExportType] = useState("");
+  const [isExportMenuOpen, setIsExportMenuOpen] = useState(false);
   useEffect(() => {
     loadAllData();
   }, []);
@@ -101,6 +105,44 @@ const Dashboard = () => {
     } else {
       setSortBy(column);
       setSortOrder("asc");
+    }
+};
+
+  const handleExport = async (type, format) => {
+    setIsExporting(true);
+    setExportType(`${type}-${format}`);
+    setIsExportMenuOpen(false);
+    
+    try {
+      const data = {
+        assignments,
+        courses,
+        performance,
+        metrics: calculateMetrics()
+      };
+
+      if (type === "progress") {
+        if (format === "csv") {
+          await exportService.exportProgressReportCSV(data);
+          toast.success("Progress report exported as CSV successfully");
+        } else if (format === "pdf") {
+          await exportService.exportProgressReportPDF(data);
+          toast.success("Progress report exported as PDF successfully");
+        }
+      } else if (type === "grades") {
+        if (format === "csv") {
+          await exportService.exportGradeSummaryCSV(data);
+          toast.success("Grade summary exported as CSV successfully");
+        } else if (format === "pdf") {
+          await exportService.exportGradeSummaryPDF(data);
+          toast.success("Grade summary exported as PDF successfully");
+        }
+      }
+    } catch (error) {
+      toast.error(`Failed to export ${type} report: ${error.message}`);
+    } finally {
+      setIsExporting(false);
+      setExportType("");
     }
   };
 
@@ -207,7 +249,7 @@ const Dashboard = () => {
     );
   }
 
-  return (
+return (
     <div className="min-h-screen bg-background">
       <Header
         onSync={handleSync}
@@ -215,6 +257,77 @@ const Dashboard = () => {
         isLoading={loading}
         onSearch={handleSearch}
         connectionStatus={connectionStatus}
+        renderExtraActions={() => (
+          <div className="relative">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setIsExportMenuOpen(!isExportMenuOpen)}
+              disabled={isExporting}
+              className="flex items-center space-x-2"
+            >
+              {isExporting ? (
+                <>
+                  <ApperIcon name="Loader2" className="w-4 h-4 animate-spin" />
+                  <span className="hidden sm:inline">Exporting...</span>
+                </>
+              ) : (
+                <>
+                  <ApperIcon name="Download" className="w-4 h-4" />
+                  <span className="hidden sm:inline">Export</span>
+                </>
+              )}
+            </Button>
+
+            {isExportMenuOpen && (
+              <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+                <div className="p-2">
+                  <div className="px-3 py-2 text-sm font-semibold text-gray-700 border-b border-gray-100">
+                    Export Options
+                  </div>
+                  
+                  <div className="mt-2 space-y-1">
+                    <div className="px-3 py-2 text-xs font-medium text-gray-500 uppercase tracking-wide">
+                      Progress Reports
+                    </div>
+                    <button
+                      onClick={() => handleExport("progress", "csv")}
+                      className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-md flex items-center space-x-2"
+                    >
+                      <ApperIcon name="FileText" className="w-4 h-4" />
+                      <span>Progress Report (CSV)</span>
+                    </button>
+                    <button
+                      onClick={() => handleExport("progress", "pdf")}
+                      className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-md flex items-center space-x-2"
+                    >
+                      <ApperIcon name="FileImage" className="w-4 h-4" />
+                      <span>Progress Report (PDF)</span>
+                    </button>
+                    
+                    <div className="px-3 py-2 text-xs font-medium text-gray-500 uppercase tracking-wide border-t border-gray-100 mt-2">
+                      Grade Summaries
+                    </div>
+                    <button
+                      onClick={() => handleExport("grades", "csv")}
+                      className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-md flex items-center space-x-2"
+                    >
+                      <ApperIcon name="FileText" className="w-4 h-4" />
+                      <span>Grade Summary (CSV)</span>
+                    </button>
+                    <button
+                      onClick={() => handleExport("grades", "pdf")}
+                      className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-md flex items-center space-x-2"
+                    >
+                      <ApperIcon name="FileImage" className="w-4 h-4" />
+                      <span>Grade Summary (PDF)</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
       />
 
       <main className="container mx-auto px-6 py-8 space-y-8">

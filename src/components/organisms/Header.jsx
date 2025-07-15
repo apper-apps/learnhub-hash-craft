@@ -4,7 +4,7 @@ import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
 import SearchBar from "@/components/molecules/SearchBar";
 
-const Header = ({ onSync, lastSync, isLoading, onSearch, connectionStatus = "connected" }) => {
+const Header = ({ onSync, lastSync, isLoading, onSearch, connectionStatus = "connected", renderExtraActions }) => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const getStatusColor = (status) => {
@@ -109,6 +109,9 @@ const Header = ({ onSync, lastSync, isLoading, onSearch, connectionStatus = "con
             >
               <ApperIcon name="Search" className="w-4 h-4" />
             </Button>
+
+{/* Extra Actions */}
+            {renderExtraActions && renderExtraActions()}
 
             {/* Sync Button */}
             <Button
