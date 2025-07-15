@@ -1,0 +1,212 @@
+[
+  {
+    "Id": 1,
+    "date": "2024-01-15",
+    "courseId": 1,
+    "grade": 85,
+    "studyHours": 6
+  },
+  {
+    "Id": 2,
+    "date": "2024-01-16",
+    "courseId": 2,
+    "grade": 78,
+    "studyHours": 4
+  },
+  {
+    "Id": 3,
+    "date": "2024-01-17",
+    "courseId": 3,
+    "grade": 92,
+    "studyHours": 3
+  },
+  {
+    "Id": 4,
+    "date": "2024-01-18",
+    "courseId": 1,
+    "grade": 89,
+    "studyHours": 5
+  },
+  {
+    "Id": 5,
+    "date": "2024-01-19",
+    "courseId": 4,
+    "grade": 72,
+    "studyHours": 7
+  },
+  {
+    "Id": 6,
+    "date": "2024-01-20",
+    "courseId": 5,
+    "grade": 88,
+    "studyHours": 4
+  },
+  {
+    "Id": 7,
+    "date": "2024-01-21",
+    "courseId": 6,
+    "grade": 84,
+    "studyHours": 3
+  },
+  {
+    "Id": 8,
+    "date": "2024-01-22",
+    "courseId": 1,
+    "grade": 91,
+    "studyHours": 6
+  },
+  {
+    "Id": 9,
+    "date": "2024-01-23",
+    "courseId": 2,
+    "grade": 83,
+    "studyHours": 5
+  },
+  {
+    "Id": 10,
+    "date": "2024-01-24",
+    "courseId": 3,
+    "grade": 94,
+    "studyHours": 4
+  },
+  {
+    "Id": 11,
+    "date": "2024-01-25",
+    "courseId": 4,
+    "grade": 79,
+    "studyHours": 6
+  },
+  {
+    "Id": 12,
+    "date": "2024-01-26",
+    "courseId": 5,
+    "grade": 90,
+    "studyHours": 5
+  },
+  {
+    "Id": 13,
+    "date": "2024-01-27",
+    "courseId": 6,
+    "grade": 87,
+    "studyHours": 4
+  },
+  {
+    "Id": 14,
+    "date": "2024-01-28",
+    "courseId": 1,
+    "grade": 93,
+    "studyHours": 7
+  },
+  {
+    "Id": 15,
+    "date": "2024-01-29",
+    "courseId": 2,
+    "grade": 86,
+    "studyHours": 5
+  },
+  {
+    "Id": 16,
+    "date": "2024-01-30",
+    "courseId": 3,
+    "grade": 96,
+    "studyHours": 3
+  },
+  {
+    "Id": 17,
+    "date": "2024-01-31",
+    "courseId": 4,
+    "grade": 81,
+    "studyHours": 6
+  },
+  {
+    "Id": 18,
+    "date": "2024-02-01",
+    "courseId": 5,
+    "grade": 89,
+    "studyHours": 4
+  },
+  {
+    "Id": 19,
+    "date": "2024-02-02",
+    "courseId": 6,
+    "grade": 85,
+    "studyHours": 4
+  },
+  {
+    "Id": 20,
+    "date": "2024-02-03",
+    "courseId": 1,
+    "grade": 92,
+    "studyHours": 5
+  },
+  {
+    "Id": 21,
+    "date": "2024-02-04",
+    "courseId": 2,
+    "grade": 88,
+    "studyHours": 6
+  },
+  {
+    "Id": 22,
+    "date": "2024-02-05",
+    "courseId": 3,
+    "grade": 95,
+    "studyHours": 4
+  },
+  {
+    "Id": 23,
+    "date": "2024-02-06",
+    "courseId": 4,
+    "grade": 77,
+    "studyHours": 7
+  },
+  {
+    "Id": 24,
+    "date": "2024-02-07",
+    "courseId": 5,
+    "grade": 91,
+    "studyHours": 5
+  },
+  {
+    "Id": 25,
+    "date": "2024-02-08",
+    "courseId": 6,
+    "grade": 89,
+    "studyHours": 4
+  },
+  {
+    "Id": 26,
+    "date": "2024-02-09",
+    "courseId": 1,
+    "grade": 94,
+    "studyHours": 6
+  },
+  {
+    "Id": 27,
+    "date": "2024-02-10",
+    "courseId": 2,
+    "grade": 90,
+    "studyHours": 5
+  },
+  {
+    "Id": 28,
+    "date": "2024-02-11",
+    "courseId": 3,
+    "grade": 97,
+    "studyHours": 3
+  },
+  {
+    "Id": 29,
+    "date": "2024-02-12",
+    "courseId": 4,
+    "grade": 82,
+    "studyHours": 6
+  },
+  {
+    "Id": 30,
+    "date": "2024-02-13",
+    "courseId": 5,
+    "grade": 93,
+    "studyHours": 4
+  }
+]

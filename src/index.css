@@ -1,0 +1,234 @@
+@import "react-toastify/dist/ReactToastify.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-gray-200;
+  }
+  
+  body {
+    @apply font-body text-gray-900 bg-background;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+  
+  .btn-primary {
+    @apply bg-primary text-white hover:bg-purple-700 focus:ring-primary;
+  }
+  
+  .btn-secondary {
+    @apply bg-secondary text-white hover:bg-purple-500 focus:ring-secondary;
+  }
+  
+  .btn-outline {
+    @apply border-2 border-primary text-primary hover:bg-primary hover:text-white focus:ring-primary;
+  }
+  
+  .card {
+    @apply bg-surface rounded-xl shadow-card border border-gray-100 overflow-hidden;
+  }
+  
+  .card-elevated {
+    @apply bg-surface rounded-xl shadow-elevated border border-gray-100 overflow-hidden;
+  }
+  
+  .input-field {
+    @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent;
+  }
+  
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
+  }
+}
+
+/* Toast Customization */
+.Toastify__toast-container {
+  @apply z-50;
+}
+
+.Toastify__toast {
+  @apply rounded-lg shadow-lg border border-gray-200 text-sm font-medium;
+}
+
+.Toastify__toast--success {
+  @apply bg-white border-success text-gray-900;
+}
+
+.Toastify__toast--error {
+  @apply bg-white border-error text-gray-900;
+}
+
+.Toastify__toast--warning {
+  @apply bg-white border-warning text-gray-900;
+}
+
+.Toastify__toast--info {
+  @apply bg-white border-info text-gray-900;
+}
+
+.Toastify__progress-bar {
+  @apply bg-gradient-to-r from-primary to-secondary;
+}
+
+.Toastify__close-button {
+  @apply text-gray-500 hover:text-gray-700;
+}
+
+/* Skeleton Loading Animation */
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+.skeleton {
+  @apply bg-gray-200 rounded;
+  background-image: linear-gradient(
+    90deg,
+    #f3f4f6 0px,
+    #e5e7eb 40px,
+    #f3f4f6 80px
+  );
+  background-size: 200px 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Progress Ring Animation */
+.progress-ring {
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+.progress-ring-circle {
+  transition: stroke-dashoffset 0.5s ease-in-out;
+}
+
+/* Smooth Number Counting */
+.number-counter {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  @apply bg-gray-100 rounded-full;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded-full hover:bg-gray-400;
+}
+
+/* Responsive Grid */
+.grid-responsive {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.grid-responsive-sm {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+/* Hover Effects */
+.hover-scale {
+  transition: transform 0.2s ease-out;
+}
+
+.hover-scale:hover {
+  transform: scale(1.02);
+}
+
+.hover-lift {
+  transition: all 0.2s ease-out;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Gradient Backgrounds */
+.gradient-bg {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.gradient-primary {
+  background: linear-gradient(135deg, #5B21B6 0%, #8B5CF6 100%);
+}
+
+.gradient-accent {
+  background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 100%);
+}
+
+/* Status Indicators */
+.status-dot {
+  @apply w-2 h-2 rounded-full inline-block mr-2;
+}
+
+.status-pending {
+  @apply bg-warning;
+}
+
+.status-completed {
+  @apply bg-success;
+}
+
+.status-overdue {
+  @apply bg-error;
+}
+
+.status-draft {
+  @apply bg-gray-400;
+}
+
+/* Chart Styles */
+.apexcharts-menu {
+  @apply bg-white border border-gray-200 rounded-lg shadow-lg;
+}
+
+.apexcharts-menu-item {
+  @apply text-sm text-gray-700 hover:bg-gray-50;
+}
+
+.apexcharts-tooltip {
+  @apply bg-white border border-gray-200 rounded-lg shadow-lg;
+}
+
+/* Animation Delays */
+.animate-delay-100 {
+  animation-delay: 0.1s;
+}
+
+.animate-delay-200 {
+  animation-delay: 0.2s;
+}
+
+.animate-delay-300 {
+  animation-delay: 0.3s;
+}
+
+.animate-delay-400 {
+  animation-delay: 0.4s;
+}
+
+.animate-delay-500 {
+  animation-delay: 0.5s;
+}
