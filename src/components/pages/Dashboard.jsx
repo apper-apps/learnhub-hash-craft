@@ -1,21 +1,23 @@
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
-import Header from "@/components/organisms/Header";
-import MetricCard from "@/components/molecules/MetricCard";
+import FilterSidebar from "@/components/organisms/FilterSidebar";
+import ApperIcon from "@/components/ApperIcon";
 import CourseCard from "@/components/organisms/CourseCard";
-import AssignmentTable from "@/components/organisms/AssignmentTable";
 import PerformanceChart from "@/components/organisms/PerformanceChart";
+import AssignmentTable from "@/components/organisms/AssignmentTable";
 import ConnectionModal from "@/components/organisms/ConnectionModal";
-import Loading from "@/components/ui/Loading";
-import Error from "@/components/ui/Error";
+import Header from "@/components/organisms/Header";
+import Button from "@/components/atoms/Button";
 import Empty from "@/components/ui/Empty";
-import coursesService from "@/services/api/coursesService";
+import Error from "@/components/ui/Error";
+import Loading from "@/components/ui/Loading";
+import MetricCard from "@/components/molecules/MetricCard";
 import assignmentsService from "@/services/api/assignmentsService";
 import performanceService from "@/services/api/performanceService";
 import exportService from "@/services/api/exportService";
-import ApperIcon from "@/components/ApperIcon";
-import Button from "@/components/atoms/Button";
+import coursesService from "@/services/api/coursesService";
+
 const Dashboard = () => {
   const [courses, setCourses] = useState([]);
   const [assignments, setAssignments] = useState([]);
@@ -32,6 +34,12 @@ const Dashboard = () => {
   const [isExporting, setIsExporting] = useState(false);
   const [exportType, setExportType] = useState("");
   const [isExportMenuOpen, setIsExportMenuOpen] = useState(false);
+  
+  // Filter states
+  const [selectedCourse, setSelectedCourse] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [showFilters, setShowFilters] = useState(false);
   useEffect(() => {
     loadAllData();
   }, []);
@@ -95,7 +103,7 @@ const Dashboard = () => {
     }
   };
 
-  const handleSearch = (term) => {
+const handleSearch = (term) => {
     setSearchTerm(term);
   };
 
@@ -106,7 +114,27 @@ const Dashboard = () => {
       setSortBy(column);
       setSortOrder("asc");
     }
-};
+  };
+
+  const handleCourseChange = (courseId) => {
+    setSelectedCourse(courseId);
+  };
+
+  const handleDateRangeChange = (start, end) => {
+    setStartDate(start);
+    setEndDate(end);
+  };
+
+  const handleClearFilters = () => {
+    setSelectedCourse("");
+    setStartDate("");
+    setEndDate("");
+    setSearchTerm("");
+  };
+
+  const toggleFilters = () => {
+    setShowFilters(!showFilters);
+  };
 
   const handleExport = async (type, format) => {
     setIsExporting(true);
@@ -178,13 +206,29 @@ const Dashboard = () => {
     };
   };
 
-  const filteredAssignments = assignments
+const filteredAssignments = assignments
     .filter(assignment => {
-      if (!searchTerm) return true;
-      return (
-        assignment.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        assignment.courseTitle.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+      // Search term filter
+      if (searchTerm) {
+        const matchesSearch = assignment.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                            assignment.courseTitle.toLowerCase().includes(searchTerm.toLowerCase());
+        if (!matchesSearch) return false;
+      }
+
+      // Course filter
+      if (selectedCourse) {
+        const courseTitle = courses.find(c => c.Id === parseInt(selectedCourse))?.title;
+        if (courseTitle && assignment.courseTitle !== courseTitle) return false;
+      }
+
+      // Date range filter
+      if (startDate || endDate) {
+        const assignmentDate = new Date(assignment.dueDate);
+        if (startDate && assignmentDate < new Date(startDate)) return false;
+        if (endDate && assignmentDate > new Date(endDate)) return false;
+      }
+
+      return true;
     })
     .sort((a, b) => {
       let aValue = a[sortBy];
@@ -206,11 +250,19 @@ const Dashboard = () => {
     });
 
   const filteredCourses = courses.filter(course => {
-    if (!searchTerm) return true;
-    return (
-      course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      course.instructor.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    // Search term filter
+    if (searchTerm) {
+      const matchesSearch = course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          course.instructor.toLowerCase().includes(searchTerm.toLowerCase());
+      if (!matchesSearch) return false;
+    }
+
+    // Course filter
+    if (selectedCourse) {
+      if (course.Id !== parseInt(selectedCourse)) return false;
+    }
+
+    return true;
   });
 
   const metrics = calculateMetrics();
@@ -330,7 +382,20 @@ return (
         )}
       />
 
-      <main className="container mx-auto px-6 py-8 space-y-8">
+      <div className="flex">
+        <FilterSidebar
+          courses={courses}
+          selectedCourse={selectedCourse}
+          startDate={startDate}
+          endDate={endDate}
+          onCourseChange={handleCourseChange}
+          onDateRangeChange={handleDateRangeChange}
+          onClearFilters={handleClearFilters}
+          isOpen={showFilters}
+          onToggle={toggleFilters}
+        />
+
+        <main className="flex-1 container mx-auto px-6 py-8 space-y-8">
         {/* Metrics */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -436,6 +501,8 @@ return (
           />
         </motion.section>
       </main>
+</main>
+      </div>
 
       <ConnectionModal
         isOpen={isConnectionModalOpen}
